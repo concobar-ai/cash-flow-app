@@ -19,13 +19,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install -g gh-pages
+          npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
       - name: Build
         run: npm run build
+        env:
+          CI: false
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
