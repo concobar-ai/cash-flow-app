@@ -20,14 +20,32 @@ jobs:
         with:
           node-version: '18'
 
+      - name: List Files
+        run: ls -la
+
       - name: Install Dependencies
         run: |
-          npm install
-          npm install -g gh-pages
-          npm install --save-dev @babel/plugin-proposal-private-property-in-object
+          echo "Starting npm install..."
+          npm install --verbose
+          echo "Installing gh-pages..."
+          npm install -g gh-pages --verbose
+          echo "Installing babel plugin..."
+          npm install --save-dev @babel/plugin-proposal-private-property-in-object --verbose
+        env:
+          CI: false
+
+      - name: Show Environment
+        run: |
+          npm list --depth=0
+          echo "Node version:"
+          node -v
+          echo "NPM version:"
+          npm -v
 
       - name: Build
-        run: npm run build
+        run: |
+          echo "Starting build process..."
+          npm run build --verbose
         env:
           CI: false
 
